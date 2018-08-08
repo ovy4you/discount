@@ -21,9 +21,7 @@ class CheapestProductDiscountCalculator extends AbstractDiscountCalculator
 
         $discounts = Discount::sqlQuery(self::DISCOUNT_CHEAPEST_PRODUCT)->first();
         if ($discounts) {
-
             $countItems = array_sum(array_column($this->order['items'], 'quantity'));
-
             foreach ($discounts->discount_rules as $rule) {
                 if ($rule->category_id == $this->order['id'] && $countItems >= $rule->minium_order_products) {
                     $this->discount = $this->getPriceCheapestProduct() * $rule->discount_amount / 100;
